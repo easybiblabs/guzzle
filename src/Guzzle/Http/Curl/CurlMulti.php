@@ -106,7 +106,15 @@ class CurlMulti extends AbstractHasDispatcher implements CurlMultiInterface
 
     public function send()
     {
-        $this->perform();
+        $this->performWrite();
+
+        return $this;
+    }
+
+    public function receive()
+    {
+        $this->performRead();
+
         $exceptions = $this->exceptions;
         $successful = $this->successful;
         $this->reset();
@@ -187,6 +195,15 @@ class CurlMulti extends AbstractHasDispatcher implements CurlMultiInterface
         $this->resourceHash[(int) $wrapper->getHandle()] = $request;
 
         return $wrapper;
+    }
+
+    protected function performWrite()
+    {
+        $this->perform();
+    }
+
+    protected function performRead()
+    {
     }
 
     /**
